@@ -10,8 +10,9 @@ namespace Codefondo.DDD.Kernel.Tests
 		{
 		}
 
+#region StringValues
 		[Test]
-		public void StringValues_Equal_EqualValues_True()
+		public void StringValues_Equals_EqualValues_True()
 		{
 			//Arrange
 			var value1 = StringValue.FromString("Test");
@@ -25,7 +26,7 @@ namespace Codefondo.DDD.Kernel.Tests
 		}
 
 		[Test]
-		public void StringValues_Equal_DifferentValues_False()
+		public void StringValues_Equals_DifferentValues_False()
 		{
 			//Arrange
 			var value1 = StringValue.FromString("Test");
@@ -104,13 +105,15 @@ namespace Codefondo.DDD.Kernel.Tests
 			//Assert
 			Assert.AreEqual(origString, value.ToString());
 		}
+		#endregion
 
+#region IntValues
 		[Test]
-		public void Equal_intValues_Equals_True()
+		public void IntValues_Equals_EqualValues_True()
 		{
 			//Arrange
-			var value1 = IntValue.FromInt(5);
-			var value2 = IntValue.FromInt(5);
+			var value1 = IntValue.FromInt(1);
+			var value2 = IntValue.FromInt(1);
 
 			//Act
 			var result = value1.Equals(value2);
@@ -118,5 +121,281 @@ namespace Codefondo.DDD.Kernel.Tests
 			//Assert
 			Assert.IsTrue(result);
 		}
+
+		[Test]
+		public void IntValues_Equals_DifferentValues_False()
+		{
+			//Arrange
+			var value1 = IntValue.FromInt(1);
+			var value2 = IntValue.FromInt(2);
+
+			//Act
+			var result = value1.Equals(value2);
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void IntValues_EqualOperator_EqualParameters_True()
+		{
+			//Arrange
+			var value1 = IntValue.FromInt(1);
+			var value2 = IntValue.FromInt(1);
+
+			//Act
+			var result = value1 == value2;
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void IntValues_EqualOperator_InequalParameters_False()
+		{
+			//Arrange
+			var value1 = IntValue.FromInt(1);
+			var value2 = IntValue.FromInt(1);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void IntValues_InequalOperator_InequalParameters_True()
+		{
+			//Arrange
+			var value1 = IntValue.FromInt(1);
+			var value2 = IntValue.FromInt(2);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void IntValues_InequalOperator_EqualParameters_False()
+		{
+			//Arrange
+			var value1 = IntValue.FromInt(1);
+			var value2 = IntValue.FromInt(1);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void IntValues_ToString_IntValue_Equals()
+		{
+			//Arrange
+			var origInt = 1;
+			var value = IntValue.FromInt(origInt);
+
+			//Assert
+			Assert.AreEqual(origInt.ToString(), value.ToString());
+		}
+		#endregion
+
+		#region EnumValues
+		[Test]
+		public void EnumValues_Equals_EqualValues_True()
+		{
+			//Arrange
+			var value1 = EnumValue.FromEnum(TestEnum.enum1);
+			var value2 = EnumValue.FromEnum(TestEnum.enum1);
+
+			//Act
+			var result = value1.Equals(value2);
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void EnumValues_Equals_DifferentValues_False()
+		{
+			//Arrange
+			var value1 = EnumValue.FromEnum(TestEnum.enum1);
+			var value2 = EnumValue.FromEnum(TestEnum.enum2);
+
+			//Act
+			var result = value1.Equals(value2);
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void EnumValues_EqualOperator_EqualParameters_True()
+		{
+			//Arrange
+			var value1 = EnumValue.FromEnum(TestEnum.enum1);
+			var value2 = EnumValue.FromEnum(TestEnum.enum1);
+
+			//Act
+			var result = value1 == value2;
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void EnumValues_EqualOperator_InequalParameters_False()
+		{
+			//Arrange
+			var value1 = EnumValue.FromEnum(TestEnum.enum1);
+			var value2 = EnumValue.FromEnum(TestEnum.enum1);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void EnumValues_InequalOperator_InequalParameters_True()
+		{
+			//Arrange
+			var value1 = EnumValue.FromEnum(TestEnum.enum1);
+			var value2 = EnumValue.FromEnum(TestEnum.enum2);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void EnumValues_InequalOperator_EqualParameters_False()
+		{
+			//Arrange
+			var value1 = EnumValue.FromEnum(TestEnum.enum1);
+			var value2 = EnumValue.FromEnum(TestEnum.enum1);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void EnumValues_ToString_EnumValue_Equals()
+		{
+			//Arrange
+			var origEnum = TestEnum.enum1;
+			var value = EnumValue.FromEnum(origEnum);
+
+			//Assert
+			Assert.AreEqual(origEnum.ToString(), value.ToString());
+		}
+		#endregion
+
+		#region BoolValues
+		[Test]
+		public void BoolValues_Equals_EqualValues_True()
+		{
+			//Arrange
+			var value1 = BoolValue.FromBool(true);
+			var value2 = BoolValue.FromBool(true);
+
+			//Act
+			var result = value1.Equals(value2);
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void BoolValues_Equals_DifferentValues_False()
+		{
+			//Arrange
+			var value1 = BoolValue.FromBool(true);
+			var value2 = BoolValue.FromBool(false);
+
+			//Act
+			var result = value1.Equals(value2);
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void BoolValues_EqualOperator_EqualParameters_True()
+		{
+			//Arrange
+			var value1 = BoolValue.FromBool(true);
+			var value2 = BoolValue.FromBool(true);
+
+			//Act
+			var result = value1 == value2;
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void BoolValues_EqualOperator_InequalParameters_False()
+		{
+			//Arrange
+			var value1 = BoolValue.FromBool(true);
+			var value2 = BoolValue.FromBool(true);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void BoolValues_InequalOperator_InequalParameters_True()
+		{
+			//Arrange
+			var value1 = BoolValue.FromBool(true);
+			var value2 = BoolValue.FromBool(false);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void BoolValues_InequalOperator_EqualParameters_False()
+		{
+			//Arrange
+			var value1 = BoolValue.FromBool(true);
+			var value2 = BoolValue.FromBool(true);
+
+			//Act
+			var result = value1 != value2;
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void BoolValues_ToString_BoolValue_Equals()
+		{
+			//Arrange
+			var origBool = true;
+			var value = BoolValue.FromBool(origBool);
+
+			//Assert
+			Assert.AreEqual(origBool.ToString(), value.ToString());
+		}
+		#endregion
 	}
 }

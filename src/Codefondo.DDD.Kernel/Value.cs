@@ -26,11 +26,6 @@ namespace Codefondo.DDD.Kernel
 				);
 		}
 
-		public override int GetHashCode()
-		{
-			return CombineHashCodes(
-					Members.Select(m => m.IsNonStringEnumerable ? CombineHashCodes(GetEnumerableValues(m.GetValue(this))) : m.GetValue(this)));
-		}
 
 		public static bool operator ==(Value<T> left, Value<T> right) => Equals(left, right);
 
@@ -58,6 +53,11 @@ namespace Codefondo.DDD.Kernel
 			);
 
 			return $"{typeof(T).Name}[{string.Join("|", values)}]";
+		}
+		public override int GetHashCode()
+		{
+			return CombineHashCodes(
+					Members.Select(m => m.IsNonStringEnumerable ? CombineHashCodes(GetEnumerableValues(m.GetValue(this))) : m.GetValue(this)));
 		}
 
 		private static IEnumerable<object> GetEnumerableValues(object obj)
