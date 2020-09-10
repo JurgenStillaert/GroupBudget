@@ -99,7 +99,7 @@ namespace Codefondo.DDD.Kernel.Tests
 		public void StringValues_ToString_StringValue_Equals()
 		{
 			//Arrange
-			var origString = "Test";
+			const string origString = "Test";
 			var value = StringValue.FromString(origString);
 
 			//Assert
@@ -196,7 +196,7 @@ namespace Codefondo.DDD.Kernel.Tests
 		public void IntValues_ToString_IntValue_Equals()
 		{
 			//Arrange
-			var origInt = 1;
+			const int origInt = 1;
 			var value = IntValue.FromInt(origInt);
 
 			//Assert
@@ -293,7 +293,7 @@ namespace Codefondo.DDD.Kernel.Tests
 		public void EnumValues_ToString_EnumValue_Equals()
 		{
 			//Arrange
-			var origEnum = TestEnum.enum1;
+			const Codefondo.DDD.Kernel.Tests.Values.TestEnum origEnum = TestEnum.enum1;
 			var value = EnumValue.FromEnum(origEnum);
 
 			//Assert
@@ -390,7 +390,7 @@ namespace Codefondo.DDD.Kernel.Tests
 		public void BoolValues_ToString_BoolValue_Equals()
 		{
 			//Arrange
-			var origBool = true;
+			const bool origBool = true;
 			var value = BoolValue.FromBool(origBool);
 
 			//Assert

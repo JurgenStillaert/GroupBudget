@@ -2,7 +2,9 @@
 {
 	public class BoolValue : Value<BoolValue>
 	{
+#pragma warning disable CC0057 // Unused parameters
 		internal BoolValue(bool value) => Value = value;
+#pragma warning restore CC0057 // Unused parameters
 
 		protected BoolValue()
 		{

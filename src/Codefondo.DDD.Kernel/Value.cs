@@ -10,7 +10,7 @@ namespace Codefondo.DDD.Kernel
 	{
 		public override bool Equals(object other)
 		{
-			if (ReferenceEquals(null, other)) return false;
+			if (other is null) return false;
 			if (ReferenceEquals(this, other)) return true;
 
 			return other.GetType() == typeof(T) && Members.All(

@@ -2,6 +2,6 @@
 {
 	public interface IInternalEventHandler
 	{
-		void Handle(object @event);
+		void Handle(IDomainEvent @event);
 	}
 }
