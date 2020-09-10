@@ -13,7 +13,7 @@ namespace Codefondo.DDD.Kernel
 		protected Entity(Action<object> applier) => _applier = applier;
 #pragma warning restore CC0057 // Unused parameters
 
-		public void Handle(object @event) => When(@event);
+		public void Handle(IDomainEvent @event) => When(@event);
 
 		protected abstract void When(object @event);
 
