@@ -1,4 +1,5 @@
 ![Azure DevOps builds](https://img.shields.io/azure-devops/build/Codefondo/81c25736-7604-4bff-b926-02a6d635a409/4)
+![Azure DevOps tests](https://img.shields.io/azure-devops/tests/codefondo/81c25736-7604-4bff-b926-02a6d635a409/4)
 
 # GroupBudget
 This project will be my reference project with implementations of DDD, Clean Architecture (Hexagonal Architecture / ports and adapters), CQRS, Event Sourcing and many other things I believe are best practices concerning software development.
