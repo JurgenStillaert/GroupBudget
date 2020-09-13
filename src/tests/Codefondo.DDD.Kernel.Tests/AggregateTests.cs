@@ -65,7 +65,7 @@ namespace Codefondo.DDD.Kernel.Tests
 			var guid = Guid.Parse("5ffdfca6-2cb6-4a22-8943-339a65298a2b");
 			var ta = TestAggregate.Create(TestAggregateId.FromGuid(guid), StringValue.FromString("testtest"), BoolValue.FromBool(true));
 			ta.UpdateString(StringValue.FromString("Hello world"));
-			
+
 			//Act
 			ta.ClearChanges();
 			var changes = ta.GetChanges();
@@ -156,7 +156,6 @@ namespace Codefondo.DDD.Kernel.Tests
 			var guid = Guid.Parse("5ffdfca6-2cb6-4a22-8943-339a65298a2b");
 			var ta = TestAggregate.Create(TestAggregateId.FromGuid(guid), StringValue.FromString("testtest"), BoolValue.FromBool(true));
 			var teGuid = Guid.Parse("12c9077f-ddc1-4ded-bbc6-ff816d384788");
-			
 
 			//Act and arrange
 			Assert.Throws<InvalidEntityState>(() => ta.AddEntity(TestEntityId.FromGuid(teGuid), StringValue.FromString("e")));
