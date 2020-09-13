@@ -26,7 +26,6 @@ namespace Codefondo.DDD.Kernel
 				);
 		}
 
-
 		public static bool operator ==(Value<T> left, Value<T> right) => Equals(left, right);
 
 		public static bool operator !=(Value<T> left, Value<T> right) => !Equals(left, right);
@@ -54,6 +53,7 @@ namespace Codefondo.DDD.Kernel
 
 			return $"{typeof(T).Name}[{string.Join("|", values)}]";
 		}
+
 		public override int GetHashCode()
 		{
 			return CombineHashCodes(

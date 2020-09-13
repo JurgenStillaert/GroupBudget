@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using static Codefondo.DDD.Kernel.DomainExceptions;
 
 namespace Codefondo.DDD.Kernel
 {
-	public abstract class AggregateRoot : IInternalEventHandler
+	public abstract class AggregateRoot
 	{
 		public Guid Id { get; protected set; }
 		public int Version { get; private set; } = -1;
@@ -14,13 +15,11 @@ namespace Codefondo.DDD.Kernel
 
 		public void ClearChanges() => _changes.Clear();
 
-		void IInternalEventHandler.Handle(IDomainEvent @event) => When(@event);
-
 		/// <summary>
 		/// Find Handle methods in the implementation with parameter of type @event
 		/// </summary>
 		/// <param name="event"></param>
-		protected void When(object @event)
+		protected void When(IDomainEvent @event)
 		{
 			//Get the handle methods
 			var handleMethod = this.GetType().GetMethod(
@@ -35,7 +34,21 @@ namespace Codefondo.DDD.Kernel
 				throw new MissingMethodException($"Handle method with event { @event.GetType()} is missing");
 			}
 
-			handleMethod.Invoke(this, new object[] { @event });
+			try
+			{
+				handleMethod.Invoke(this, new object[] { @event });
+			}
+			catch (TargetInvocationException targetInvocationException)
+			{
+				if (targetInvocationException.InnerException is InvalidEntityState)
+				{
+					throw targetInvocationException.InnerException;
+				}
+				else
+				{
+					throw;
+				}
+			}
 		}
 
 		protected void Apply(IDomainEvent @event)
@@ -46,12 +59,6 @@ namespace Codefondo.DDD.Kernel
 		}
 
 		protected abstract void EnsureValidation();
-
-#pragma warning disable CC0091 // Use static method
-#pragma warning disable CA1822 // Mark members as static
-		protected void ApplyToEntity(IInternalEventHandler entity, IDomainEvent @event) => entity?.Handle(@event);
-#pragma warning restore CA1822 // Mark members as static
-#pragma warning restore CC0091 // Use static method
 
 		private readonly List<IDomainEvent> _changes = new List<IDomainEvent>();
 	}

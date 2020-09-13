@@ -3,7 +3,9 @@
 	public class EnumValue : Value<EnumValue>
 	{
 #pragma warning disable CC0057 // Unused parameters
+
 		internal EnumValue(TestEnum value) => Value = value;
+
 #pragma warning restore CC0057 // Unused parameters
 
 		protected EnumValue()

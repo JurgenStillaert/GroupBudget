@@ -10,7 +10,8 @@ namespace Codefondo.DDD.Kernel.Tests
 		{
 		}
 
-#region StringValues
+		#region StringValues
+
 		[Test]
 		public void StringValues_Equals_EqualValues_True()
 		{
@@ -105,9 +106,11 @@ namespace Codefondo.DDD.Kernel.Tests
 			//Assert
 			Assert.AreEqual(origString, value.ToString());
 		}
-		#endregion
 
-#region IntValues
+		#endregion StringValues
+
+		#region IntValues
+
 		[Test]
 		public void IntValues_Equals_EqualValues_True()
 		{
@@ -202,9 +205,11 @@ namespace Codefondo.DDD.Kernel.Tests
 			//Assert
 			Assert.AreEqual(origInt.ToString(), value.ToString());
 		}
-		#endregion
+
+		#endregion IntValues
 
 		#region EnumValues
+
 		[Test]
 		public void EnumValues_Equals_EqualValues_True()
 		{
@@ -299,9 +304,11 @@ namespace Codefondo.DDD.Kernel.Tests
 			//Assert
 			Assert.AreEqual(origEnum.ToString(), value.ToString());
 		}
-		#endregion
+
+		#endregion EnumValues
 
 		#region BoolValues
+
 		[Test]
 		public void BoolValues_Equals_EqualValues_True()
 		{
@@ -396,6 +403,7 @@ namespace Codefondo.DDD.Kernel.Tests
 			//Assert
 			Assert.AreEqual(origBool.ToString(), value.ToString());
 		}
-		#endregion
+
+		#endregion BoolValues
 	}
 }

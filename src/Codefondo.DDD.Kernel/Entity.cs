@@ -1,26 +1,41 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Codefondo.DDD.Kernel
 {
-	public abstract class Entity<TId> : IInternalEventHandler
+	public abstract class Entity<TId>
 		where TId : Value<TId>
 	{
-		readonly Action<object> _applier;
-
 		public TId Id { get; protected set; }
 
-#pragma warning disable CC0057 // Unused parameters
-		protected Entity(Action<object> applier) => _applier = applier;
-#pragma warning restore CC0057 // Unused parameters
+		/// <summary>
+		/// Find Handle methods in the implementation with parameter of type @event
+		/// </summary>
+		/// <param name="event"></param>
+		protected internal void When(IDomainEvent @event)
+		{
+			//Get the handle methods
+			var handleMethod = this.GetType().GetMethod(
+					"Handle",
+					BindingFlags.Instance | BindingFlags.NonPublic,
+					Type.DefaultBinder,
+					new Type[] { @event.GetType() },
+					null);
 
-		public void Handle(IDomainEvent @event) => When(@event);
+			if (handleMethod == null)
+			{
+				throw new MissingMethodException($"Handle method with event { @event.GetType()} is missing");
+			}
 
-		protected abstract void When(object @event);
+			handleMethod.Invoke(this, new object[] { @event });
+		}
 
-		protected void Apply(object @event)
+		protected void Apply(IDomainEvent @event)
 		{
 			When(@event);
-			_applier(@event);
+			EnsureValidation();
 		}
+
+		protected internal abstract void EnsureValidation();
 	}
 }
