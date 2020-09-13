@@ -30,4 +30,16 @@ namespace Codefondo.DDD.Kernel.Tests.Aggregate.DomainEvents
 
 	public sealed class EventNotImplemented : IDomainEvent
 	{ }
+
+	public sealed class TestEntityAddedToTestAggregateEvent : IDomainEvent
+	{
+		public Guid Id { get; }
+		public string MyString { get; }
+
+		public TestEntityAddedToTestAggregateEvent(Guid id, string myString)
+		{
+			Id = id;
+			MyString = myString;
+		}
+	}
 }

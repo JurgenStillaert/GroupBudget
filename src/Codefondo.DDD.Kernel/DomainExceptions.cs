@@ -5,6 +5,7 @@ namespace Codefondo.DDD.Kernel
 	public static class DomainExceptions
 	{
 #pragma warning disable CA1034 // Nested types should not be visible
+
 		public class InvalidEntityState : Exception
 		{
 			public InvalidEntityState(object entity, string message, Exception innerException = null)
@@ -24,6 +25,7 @@ namespace Codefondo.DDD.Kernel
 			{
 			}
 		}
+
 #pragma warning restore CA1034 // Nested types should not be visible
 	}
 }

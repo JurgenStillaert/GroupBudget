@@ -7,6 +7,7 @@ namespace Codefondo.DDD.Kernel.Tests.Aggregate
 	{
 		public StringValue MyString { get; private set; }
 		public BoolValue MyBool { get; private set; }
+		public TestEntity MyTe { get; private set; }
 
 		public static TestAggregate Create(
 			TestAggregateId id,
@@ -30,6 +31,12 @@ namespace Codefondo.DDD.Kernel.Tests.Aggregate
 			Apply(new StringUpdatedEvent(Id, str));
 		}
 
+		public void AddEntity(TestEntityId testId, StringValue stringValue)
+		{
+			Apply(new TestEntityAddedToTestAggregateEvent(testId.Value, stringValue));
+
+		}
+
 		protected override void EnsureValidation()
 		{
 			var valid =
@@ -45,6 +52,7 @@ namespace Codefondo.DDD.Kernel.Tests.Aggregate
 
 #pragma warning disable IDE0051 // Remove unused private members
 #pragma warning disable CC0068 // Unused Method
+
 		private void Handle(CreatedEvent @event)
 		{
 			Id = @event.Id;
@@ -56,6 +64,12 @@ namespace Codefondo.DDD.Kernel.Tests.Aggregate
 		{
 			MyString = StringValue.FromString(@event.MyString);
 		}
+
+		private void Handle(TestEntityAddedToTestAggregateEvent @event)
+		{
+			MyTe = TestEntity.Create(@event);
+		}
+
 #pragma warning restore CC0068 // Unused Method
 #pragma warning restore IDE0051 // Remove unused private members
 	}
