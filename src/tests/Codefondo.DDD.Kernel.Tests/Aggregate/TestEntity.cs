@@ -31,10 +31,14 @@ namespace Codefondo.DDD.Kernel.Tests.Aggregate
 			}
 		}
 
+#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable CC0068 // Unused Method
 		private void Handle(TestEntityAddedToTestAggregateEvent @event)
 		{
 			Id = TestEntityId.FromGuid(@event.Id);
 			MyString = StringValue.FromString(@event.MyString);
 		}
+#pragma warning restore CC0068 // Unused Method
+#pragma warning restore IDE0051 // Remove unused private members
 	}
 }
