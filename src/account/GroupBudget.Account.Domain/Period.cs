@@ -1,5 +1,6 @@
 ﻿using Codefondo.DDD.Kernel;
 using System;
+using System.Globalization;
 
 namespace GroupBudget.Account.Domain
 {
@@ -73,12 +74,33 @@ namespace GroupBudget.Account.Domain
 
 		public static Period FromWeekNumber(int year, int weekNumber)
 		{
-			throw new NotImplementedException();
+			if (year < 1900 || year > 2100)
+			{
+				throw new ArgumentOutOfRangeException(nameof(year), "Year is not in a reasonable range (1900-2100)");
+			}
+
+			var startDate = ISOWeek.ToDateTime(year, weekNumber, DayOfWeek.Monday);
+			var endDate = startDate.AddDays(6);
+
+			return new Period(startDate, endDate);
 		}
 
-		public static Period FromMonth(int year, int weekNumber)
+		public static Period FromMonth(int year, int monthNumber)
 		{
-			throw new NotImplementedException();
+			if (year < 1900 || year > 2100)
+			{
+				throw new ArgumentOutOfRangeException(nameof(year), "Year is not in a reasonable range (1900-2100)");
+			}
+
+			if (monthNumber < 1 || monthNumber > 12)
+			{
+				throw new ArgumentOutOfRangeException(nameof(monthNumber), "Month is not in a reasonable range (1-12)");
+			}
+
+			var startDate = new DateTime(year, monthNumber, 1);
+			var endDate = startDate.AddDays(DateTime.DaysInMonth(year, monthNumber) - 1);
+
+			return new Period(startDate, endDate);
 		}
 
 		public enum DurationEnum

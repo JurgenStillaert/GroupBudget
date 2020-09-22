@@ -6,11 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
-    <ProjectReference Include="..\GroupBudget.Account.Messages\GroupBudget.Account.Messages.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Events\" />
   </ItemGroup>
 
 </Project>

@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.Account.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.Account.Domain.Tests", "account\GroupBudget.Account.Domain.Tests\GroupBudget.Account.Domain.Tests.csproj", "{73E56E46-98FF-474C-AA30-594FFD6CD862}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupBudget.Account.Messages", "account\GroupBudget.Account.Messages\GroupBudget.Account.Messages.csproj", "{E660EB50-E857-43F9-A395-CAD6BCB96F52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{73E56E46-98FF-474C-AA30-594FFD6CD862}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73E56E46-98FF-474C-AA30-594FFD6CD862}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73E56E46-98FF-474C-AA30-594FFD6CD862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E660EB50-E857-43F9-A395-CAD6BCB96F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E660EB50-E857-43F9-A395-CAD6BCB96F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E660EB50-E857-43F9-A395-CAD6BCB96F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E660EB50-E857-43F9-A395-CAD6BCB96F52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{E6399040-E9B6-4805-9A90-2EA661F58C36} = {F93AA4D5-388E-4614-9A23-4CCF3AA97D5F}
 		{65A7720A-58AD-4751-B0D2-8E5A42C58D55} = {C0973B65-08D1-48FE-9C6E-75DA6B83111F}
 		{73E56E46-98FF-474C-AA30-594FFD6CD862} = {F93AA4D5-388E-4614-9A23-4CCF3AA97D5F}
+		{E660EB50-E857-43F9-A395-CAD6BCB96F52} = {C0973B65-08D1-48FE-9C6E-75DA6B83111F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC0AC4C2-F927-48C8-BEE1-E63FCF184B02}
