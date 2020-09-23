@@ -61,5 +61,7 @@ namespace Codefondo.DDD.Kernel
 		protected abstract void EnsureValidation();
 
 		private readonly List<IDomainEvent> _changes = new List<IDomainEvent>();
+
+		protected static void ApplyToEntity(IEntity entity, IDomainEvent @event) => entity?.Apply(@event);
 	}
 }

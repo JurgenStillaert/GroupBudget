@@ -24,8 +24,8 @@ namespace GroupBudget.Account.Domain
 				throw new ArgumentException("End date cannot earlier than start date");
 			}
 
-			StartDate = startDate;
-			EndDate = endDate;
+			StartDate = startDate.Date;
+			EndDate = endDate.Date;
 		}
 
 		public static Period FromStartAndEndDate(DateTime startDate, DateTime endDate) => new Period(startDate, endDate);
