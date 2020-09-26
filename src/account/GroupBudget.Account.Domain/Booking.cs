@@ -1,8 +1,5 @@
 ﻿using Codefondo.DDD.Kernel;
 using GroupBudget.Account.Messages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GroupBudget.Account.Domain
 {
@@ -25,6 +22,24 @@ namespace GroupBudget.Account.Domain
 			return Date.Value >= period.StartDate && Date.Value <= period.EndDate;
 		}
 
-		protected override void EnsureValidation() {}
+		protected override void EnsureValidation()
+		{
+			var valid = Id != default
+						&& Date != default
+						&& Payment != null
+						&& Description != null;
+
+			if (!valid)
+			{
+				throw new DomainExceptions.InvalidEntityState(this, "Post-checks failed");
+			}
+		}
+
+		private void Handle(Events.V1.BookingChanged @event)
+		{
+			Date = BookingDate.FromDate(@event.Date);
+			Payment = Payment.FromDecimal(@event.Amount, @event.CurrencyCode);
+			Description = Description.FromString(@event.Description);
+		}
 	}
 }

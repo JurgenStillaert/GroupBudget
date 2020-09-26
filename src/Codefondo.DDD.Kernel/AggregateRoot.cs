@@ -9,7 +9,6 @@ namespace Codefondo.DDD.Kernel
 	public abstract class AggregateRoot
 	{
 		public Guid Id { get; protected set; }
-		public int Version { get; private set; } = -1;
 
 		public IReadOnlyList<IDomainEvent> GetChanges() => _changes.ToList();
 
@@ -40,14 +39,7 @@ namespace Codefondo.DDD.Kernel
 			}
 			catch (TargetInvocationException targetInvocationException)
 			{
-				if (targetInvocationException.InnerException is InvalidEntityState)
-				{
-					throw targetInvocationException.InnerException;
-				}
-				else
-				{
-					throw;
-				}
+				throw targetInvocationException.InnerException;
 			}
 		}
 
