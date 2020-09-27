@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Codefondo.DDD.Kernel
 {
-	public abstract class Entity<TId>
+	public abstract class Entity<TId> : IEntity
 		where TId : Value<TId>
 	{
 		public TId Id { get; protected set; }
@@ -30,7 +30,7 @@ namespace Codefondo.DDD.Kernel
 			handleMethod.Invoke(this, new object[] { @event });
 		}
 
-		protected void Apply(IDomainEvent @event)
+		public void Apply(IDomainEvent @event)
 		{
 			When(@event);
 			EnsureValidation();
