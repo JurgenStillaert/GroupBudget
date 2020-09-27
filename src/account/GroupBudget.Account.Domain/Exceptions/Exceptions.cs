@@ -2,7 +2,7 @@
 
 namespace GroupBudget.Account.Domain
 {
-	public partial class Exceptions
+	public static partial class Exceptions
 	{
 		[Serializable]
 		public class PaymentNotSameCurrencyAsAccountException : Exception

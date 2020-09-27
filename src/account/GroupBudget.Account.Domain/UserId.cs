@@ -20,7 +20,5 @@ namespace GroupBudget.Account.Domain
 		public static UserId FromGuid(Guid value) => new UserId(value);
 
 		public static implicit operator Guid(UserId self) => self.Value;
-
-		public override string ToString() => Value.ToString();
 	}
 }

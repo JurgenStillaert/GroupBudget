@@ -1,5 +1,6 @@
 ﻿using Codefondo.DDD.Kernel;
 using GroupBudget.Account.Messages;
+using GroupBudget.SharedKernel;
 
 namespace GroupBudget.Account.Domain
 {
@@ -35,11 +36,21 @@ namespace GroupBudget.Account.Domain
 			}
 		}
 
+#pragma warning disable CC0068 // Unused Method
+#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable CC0057 // Unused parameters
+#pragma warning disable IDE0060 // Remove unused parameter
+
 		private void Handle(Events.V1.BookingChanged @event)
 		{
 			Date = BookingDate.FromDate(@event.Date);
 			Payment = Payment.FromDecimal(@event.Amount, @event.CurrencyCode);
 			Description = Description.FromString(@event.Description);
 		}
+
+#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore CC0057 // Unused parameters
+#pragma warning restore IDE0051 // Remove unused private members
+#pragma warning restore CC0068 // Unused Method
 	}
 }

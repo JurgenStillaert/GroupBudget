@@ -1,7 +1,7 @@
 ﻿using Codefondo.DDD.Kernel;
 using System;
 
-namespace GroupBudget.Account.Domain
+namespace GroupBudget.SharedKernel
 {
 	public class Money : Value<Money>
 	{
@@ -50,12 +50,20 @@ namespace GroupBudget.Account.Domain
 		public static Money operator -(Money amount1, Money amount2) => amount1.Subtract(amount2);
 
 		public override string ToString()
-			=> $"{CurrencyCode} {Amount.ToString("F")}";
+			=> $"{Amount:F} {CurrencyCode}";
 	}
 
 	public class CurrencyMismatchException : Exception
 	{
 		public CurrencyMismatchException(string message) : base(message)
+		{
+		}
+
+		public CurrencyMismatchException()
+		{
+		}
+
+		public CurrencyMismatchException(string message, Exception innerException) : base(message, innerException)
 		{
 		}
 	}

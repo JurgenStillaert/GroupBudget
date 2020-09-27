@@ -94,20 +94,10 @@ namespace GroupBudget.Account.Domain.Tests
 		}
 
 		[Test]
-		public void BookingDate_FromString_DefaultDate_ArgumentNullException()
-		{
-			//Arrange
-			var dte = DateTime.MinValue.ToString();
-
-			//Act & Assert
-			Assert.Throws<ArgumentNullException>(() => BookingDate.FromString(dte));
-		}
-
-		[Test]
 		public void BookingDate_FromString_InvalidDate_ArgumentNullException()
 		{
 			//Arrange
-			var dte = "hello";
+			const string dte = "hello";
 
 			//Act & Assert
 			Assert.Throws<FormatException>(() => BookingDate.FromString(dte));
@@ -146,7 +136,7 @@ namespace GroupBudget.Account.Domain.Tests
 		public void CurrencyCode_FromString_ValidCurrencyCode_Created()
 		{
 			//Arrange
-			var currencyString = "EUR";
+			const string currencyString = "EUR";
 
 			//Act
 			var currencyCode = CurrencyCode.FromString(currencyString);
@@ -159,7 +149,7 @@ namespace GroupBudget.Account.Domain.Tests
 		public void CurrencyCode_FromString_LowercaseCurrencyCode_CreatedUppercase()
 		{
 			//Arrange
-			var currencyString = "eur";
+			const string currencyString = "eur";
 
 			//Act
 			var currencyCode = CurrencyCode.FromString(currencyString);
@@ -172,7 +162,7 @@ namespace GroupBudget.Account.Domain.Tests
 		public void CurrencyCode_FromString_EmptyString_ArgumentNullException()
 		{
 			//Arrange
-			var currencyString = "eur";
+			var currencyString = string.Empty;
 
 			//Act & assert
 			Assert.Throws<ArgumentNullException>(() => CurrencyCode.FromString(currencyString));
@@ -191,7 +181,7 @@ namespace GroupBudget.Account.Domain.Tests
 		public void Description_FromString_ValidString_Created()
 		{
 			//Arrange
-			var descString = "This is my description";
+			const string descString = "This is my description";
 
 			//Act
 			var description = Description.FromString(descString);
@@ -204,7 +194,7 @@ namespace GroupBudget.Account.Domain.Tests
 		public void Description_FromString_TooShortString_ArgumentException()
 		{
 			//Arrange
-			var descString = "a";
+			const string descString = "a";
 
 			//Act & assert
 			Assert.Throws<ArgumentException>(() => Description.FromString(descString));
@@ -214,28 +204,56 @@ namespace GroupBudget.Account.Domain.Tests
 		public void Description_FromString_TooLongString_ArgumentException()
 		{
 			//Arrange
-			var descString = "Description must have a maximum of 30 charachters";
+			const string descString = "Description must have a maximum of 30 charachters";
 
 			//Act & assert
 			Assert.Throws<ArgumentException>(() => Description.FromString(descString));
 		}
 
 		[Test]
-		public void Description_FromString_NullString_ArgumentException()
+		public void Description_FromString_NullString_NullReferenceException()
 		{
 			//Arrange
-			string descString = null;
+			const string descString = null;
 
 			//Act & assert
-			Assert.Throws<ArgumentException>(() => Description.FromString(descString));
+			Assert.Throws<NullReferenceException>(() => Description.FromString(descString));
 		}
 		#endregion
+
+		#region UserId
+
+		[Test]
+		public void UserId_ValidGuid_Created()
+		{
+			//Arrange
+			var guid = Guid.Parse("dca2b44e-6ea7-4812-8c2f-ca772512ca01");
+
+			//Act
+			var userId = UserId.FromGuid(guid);
+
+			//Assert
+			Assert.AreEqual(guid, userId.Value);
+		}
+
+		[Test]
+		public void UserId_DefaultGuid_ArgumentNullException()
+		{
+			//Arrange
+			var guid = Guid.Empty;
+
+			//Act & Assert
+			Assert.Throws<ArgumentNullException>(() => UserId.FromGuid(guid));
+		}
+
+		#endregion AccountId
 
 		#region Payment
 		[Test]
 		public void Payment_FromDecimal_PositiveAmountAndValidCurrency_Created()
 		{
 			//Arrange
+
 
 			//Act
 

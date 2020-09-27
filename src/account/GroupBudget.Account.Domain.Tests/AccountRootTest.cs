@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using GroupBudget.SharedKernel;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using static Codefondo.DDD.Kernel.DomainExceptions;
@@ -366,7 +367,6 @@ namespace GroupBudget.Account.Domain.Tests
 
 			//Act & assert
 			Assert.Throws<InvalidOperationException>(() => account.DeleteBooking(bookingId));
-
 		}
 
 		[Test]
@@ -412,9 +412,9 @@ namespace GroupBudget.Account.Domain.Tests
 			var account = AccountRoot.Create(id, ownerId, period, currency);
 
 			account.BookPayment(
-				BookingId.FromGuid(Guid.Parse("9d8d8a72-59a0-4a1b-8b86-94960df74586")), 
-				Payment.FromDecimal(10.00m, "EUR"), 
-				BookingDate.FromString("2020-09-01"), 
+				BookingId.FromGuid(Guid.Parse("9d8d8a72-59a0-4a1b-8b86-94960df74586")),
+				Payment.FromDecimal(10.00m, "EUR"),
+				BookingDate.FromString("2020-09-01"),
 				Description.FromString("Booking1"));
 
 			account.BookPayment(

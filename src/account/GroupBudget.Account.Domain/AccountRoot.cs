@@ -1,4 +1,5 @@
 ﻿using Codefondo.DDD.Kernel;
+using GroupBudget.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +28,19 @@ namespace GroupBudget.Account.Domain
 		/// <summary>
 		/// The list of the bookings already registered to the account
 		/// </summary>
-		public IReadOnlyList<Booking> Bookings => _bookings;
+		public IReadOnlyList<Booking> Bookings => PrivateBookings;
 
 		/// <summary>
 		/// The total amount paid (sum of the payments in bookings)
 		/// </summary>
-		public Money TotalAmountPaid => Money.FromDecimal(_bookings.Sum(x => x.Payment.Amount), Currency.Value);
+		public Money TotalAmountPaid => Money.FromDecimal(PrivateBookings.Sum(x => x.Payment.Amount), Currency.Value);
 
 		/// <summary>
 		/// In which currency is this account registered
 		/// </summary>
 		public CurrencyCode Currency { get; private set; }
 
-		private List<Booking> _bookings { get; set; }
+		private List<Booking> PrivateBookings { get; set; }
 
 		/// <summary>Create a new account</summary>
 		/// <param name="accountId">ID of the account</param>
@@ -50,7 +51,7 @@ namespace GroupBudget.Account.Domain
 		{
 			var account = new AccountRoot
 			{
-				_bookings = new List<Booking>()
+				PrivateBookings = new List<Booking>()
 			};
 
 			account.Apply(new V1.AccountCreated(accountId, userId, period.StartDate, period.EndDate, currency.Value));
@@ -104,7 +105,7 @@ namespace GroupBudget.Account.Domain
 				&& Currency != null;
 
 			//All bookings need to be booked in the limits of the period of the account
-			_bookings.ForEach(x =>
+			PrivateBookings.ForEach(x =>
 			{
 				var bookingDateIsValid = x.BookingDateIsInPeriod(Period);
 				if (!bookingDateIsValid)
@@ -119,6 +120,10 @@ namespace GroupBudget.Account.Domain
 			}
 		}
 
+#pragma warning disable CC0068 // Unused Method
+#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable CC0057 // Unused parameters
+#pragma warning disable IDE0060 // Remove unused parameter
 		private void Handle(V1.AccountCreated @event)
 		{
 			Id = @event.Id;
@@ -141,7 +146,7 @@ namespace GroupBudget.Account.Domain
 			}
 
 			var booking = new Booking(@event);
-			_bookings.Add(booking);
+			PrivateBookings.Add(booking);
 		}
 
 		private void Handle(V1.BookingRemovedFromAccount @event)
@@ -151,9 +156,9 @@ namespace GroupBudget.Account.Domain
 				throw new InvalidOperationException("Cannot add bookings to a closed account");
 			}
 
-			var booking = _bookings.Single(x => x.Id.Value == @event.BookingId);
+			var booking = PrivateBookings.Single(x => x.Id.Value == @event.BookingId);
 
-			_bookings.Remove(booking);
+			PrivateBookings.Remove(booking);
 		}
 
 		private void Handle(V1.BookingChanged @event)
@@ -168,13 +173,12 @@ namespace GroupBudget.Account.Domain
 				throw new PaymentNotSameCurrencyAsAccountException();
 			}
 
-			var booking = _bookings.Single(x => x.Id.Value == @event.BookingId);
+			var booking = PrivateBookings.Single(x => x.Id.Value == @event.BookingId);
 
 			booking.Apply(@event);
 		}
 
-#pragma warning disable CC0068 // Unused Method
-#pragma warning disable CC0057 // Unused parameters
+
 
 		private void Handle(V1.AccountClosed @event)
 		{
@@ -186,7 +190,9 @@ namespace GroupBudget.Account.Domain
 			State = AccountState.CreateClosed();
 		}
 
+#pragma warning restore IDE0060 // Remove unused parameter
 #pragma warning restore CC0057 // Unused parameters
+#pragma warning restore IDE0051 // Remove unused private members
 #pragma warning restore CC0068 // Unused Method
 	}
 }
