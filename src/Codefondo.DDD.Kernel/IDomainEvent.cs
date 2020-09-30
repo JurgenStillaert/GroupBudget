@@ -1,6 +1,8 @@
-﻿namespace Codefondo.DDD.Kernel
+﻿using MediatR;
+
+namespace Codefondo.DDD.Kernel
 {
-	public interface IDomainEvent
+	public interface IDomainEvent : INotification
 	{
 	}
 }

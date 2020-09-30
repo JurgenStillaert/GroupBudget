@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="8.1.0" />
+    <ProjectReference Include="..\..\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
   </ItemGroup>
 
 </Project>

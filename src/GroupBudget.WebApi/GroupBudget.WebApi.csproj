@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>26f2fcca-f4e6-405a-98e2-80ec8da3d5e3</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj" />
+    <ProjectReference Include="..\account\GroupBudget.Account.UseCases\GroupBudget.Account.UseCases.csproj" />
+  </ItemGroup>
+
+</Project>
