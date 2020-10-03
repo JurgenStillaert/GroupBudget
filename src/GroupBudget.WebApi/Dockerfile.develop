@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_URLS=http://+:80
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["account/GroupBudget.Account.Domain/GroupBudget.Account.Domain.csproj", "account/GroupBudget.Account.Domain/"]
+COPY ["account/GroupBudget.Account.Dtos/GroupBudget.Account.Dtos.csproj", "account/GroupBudget.Account.Dtos/"]
+COPY ["account/GroupBudget.Account.Messages/GroupBudget.Account.Messages.csproj", "account/GroupBudget.Account.Messages/"]
+COPY ["account/GroupBudget.Account.Persistence/GroupBudget.Account.Persistence.csproj", "account/GroupBudget.Account.Persistence/"]
+COPY ["account/GroupBudget.Account.UseCases/GroupBudget.Account.UseCases.csproj", "account/GroupBudget.Account.UseCases/"]
+COPY ["Codefondo.DDD.Kernel/Codefondo.DDD.Kernel.csproj", "Codefondo.DDD.Kernel/"]
+COPY ["GroupBudget.SharedKernel/GroupBudget.SharedKernel.csproj", "GroupBudget.SharedKernel/"]
+COPY ["GroupBudget.WebApi/GroupBudget.WebApi.csproj", "GroupBudget.WebApi/"]
+COPY ["libraries/Codefondo.UseCase.Kernel/Codefondo.UseCase.Kernel.csproj", "libraries/Codefondo.UseCase.Kernel/"]
+
+RUN dotnet restore "GroupBudget.WebApi/GroupBudget.WebApi.csproj"
+COPY . .
+WORKDIR "/src/GroupBudget.WebApi"
+RUN dotnet build --no-restore "GroupBudget.WebApi.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
