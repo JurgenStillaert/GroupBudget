@@ -1,49 +1,45 @@
 ﻿using Codefondo.UseCase.Kernel;
 using GroupBudget.Account.Domain;
+using GroupBudget.Account.Dtos;
 using MediatR;
-using System;
 
 namespace GroupBudget.Account.UseCases
 {
 	public sealed class CreateCommand : IRequest<Unit>
 	{
-		public Guid Id { get; }
-		public Guid OwnerId { get; }
-		public int Month { get; }
-		public int Year { get; }
-		public string Currency { get; }
+		private readonly CreateAccountDto accountDto;
 
-		public CreateCommand(Guid id, Guid ownerId, int month, int year, string currency)
+		public CreateCommand(CreateAccountDto accountDto)
 		{
-			Id = id;
-			OwnerId = ownerId;
-			Month = month;
-			Year = year;
-			Currency = currency;
+			this.accountDto = accountDto;
 		}
 
 		internal sealed class CreateCommandHandler : CreateCommandHandler<CreateCommand, AccountRoot>
 		{
 			private readonly IAccountRepository accountRepo;
 
-			public CreateCommandHandler(IAccountRepository accountRepo)
-				: base(accountRepo)
+			public CreateCommandHandler(IAccountRepository accountRepo, IMediator mediator)
+				: base(accountRepo, mediator)
 			{
 				this.accountRepo = accountRepo;
 			}
 
 			private void PreHandle(CreateCommand command)
 			{
-				AggregateId = AccountId.FromGuid(command.Id);
+				AggregateId = AccountId.FromGuid(command.accountDto.Id);
 			}
 
 			private AccountRoot Handle(CreateCommand command)
 			{
-				return AccountRoot.Create(
-									AccountId.FromGuid(command.Id),
-									UserId.FromGuid(command.OwnerId),
-									Period.FromMonth(command.Year, command.Month),
-									CurrencyCode.FromString(command.Currency));
+				var account = AccountRoot.Create(
+									AccountId.FromGuid(command.accountDto.Id),
+									UserId.FromGuid(command.accountDto.OwnerId),
+									Period.FromMonth(command.accountDto.Year, command.accountDto.Month),
+									CurrencyCode.FromString(command.accountDto.Currency));
+
+				accountRepo.Save(account);
+
+				return account;
 			}
 		}
 	}

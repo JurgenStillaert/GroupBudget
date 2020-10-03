@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GroupBudget.Account.Dtos;
 using GroupBudget.Account.UseCases;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GroupBudget.WebApi.Controllers
 {
@@ -21,9 +20,20 @@ namespace GroupBudget.WebApi.Controllers
 		}
 
 		[HttpPost]
-		public Task Create()
+		public async Task<ActionResult<AccountDto>> Create([FromBody]CreateAccountDto accountDto)
 		{
-			return mediator.Send(new CreateCommand(Guid.NewGuid(), Guid.NewGuid(), 9, 2020, "EUR"));
+			accountDto.Id = Guid.NewGuid();
+
+			await mediator.Send(new CreateCommand(accountDto));
+
+			return Ok(accountDto);
+		}
+
+		[HttpGet]
+		[Route("/user/{userGuid}")]
+		public async Task<IEnumerable<AccountDto>> GetAccountsByUser([FromQuery]Guid userGuid)
+		{
+			return await mediator.Send(new GetAccountDtosByUserQuery(userGuid));
 		}
 	}
 }

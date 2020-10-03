@@ -10,5 +10,7 @@ namespace GroupBudget.Account.Domain
 		}
 
 		public static AccountId FromGuid(Guid value) => new AccountId(value);
+
+		public static AccountId FromString(string id) => new AccountId(Guid.Parse(id));
 	}
 }

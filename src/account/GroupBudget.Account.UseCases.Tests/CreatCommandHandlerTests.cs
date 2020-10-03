@@ -1,7 +1,10 @@
 ﻿using GroupBudget.Account.Domain;
+using GroupBudget.Account.Dtos;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using static GroupBudget.Account.UseCases.CreateCommand;
 
@@ -18,15 +21,28 @@ namespace GroupBudget.Account.UseCases.Tests
 			var month = 9;
 			var year = 2020;
 			var currency = "EUR";
-			var command = new CreateCommand(id, userId, month, year, currency);
+
+			var accountDto = new CreateAccountDto
+			{
+				Currency = currency,
+				Id = id,
+				Month = month,
+				Year = year,
+				OwnerId = userId
+			};
+
+			var command = new CreateCommand(accountDto);
 
 			var mockRepo = new Mock<IAccountRepository>();
 			mockRepo.Setup(x => x.Save(It.IsAny<AccountRoot>())).Verifiable();
 
-			var createCommandHandler = new CreateCommandHandler(mockRepo.Object);
+			var mockMediater = new Mock<IMediator>();
+			mockMediater.Setup(x => x.Publish(It.IsAny<INotification>(), It.IsAny<CancellationToken>()));
+
+			var createCommandHandler = new CreateCommandHandler(mockRepo.Object, mockMediater.Object);
 
 			//Act
-			await createCommandHandler.Apply(command);
+			await createCommandHandler.Handle(command, CancellationToken.None);
 
 			//Assert
 			mockRepo.Verify();

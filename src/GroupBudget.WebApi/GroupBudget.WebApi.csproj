@@ -4,14 +4,22 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>26f2fcca-f4e6-405a-98e2-80ec8da3d5e3</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.14" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.14" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Kubernetes.Tools.Targets" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\account\GroupBudget.Account.Infrastructure\GroupBudget.Account.Infrastructure.csproj" />
     <ProjectReference Include="..\account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj" />
     <ProjectReference Include="..\account\GroupBudget.Account.UseCases\GroupBudget.Account.UseCases.csproj" />
   </ItemGroup>

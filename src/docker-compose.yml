@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  groupbudget.webapi:
+    image: ${DOCKER_REGISTRY-}groupbudgetwebapi
+    build:
+      context: .
+      dockerfile: GroupBudget.WebApi/Dockerfile
+    ports:
+      - "30000:80"
+      - "30001:443"
+  mongo:
+    image: mongo
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "30002:8081"

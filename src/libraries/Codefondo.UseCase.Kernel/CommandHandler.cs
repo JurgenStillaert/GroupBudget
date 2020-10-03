@@ -11,8 +11,8 @@ namespace Codefondo.UseCase.Kernel
 		where TAggregate : AggregateRoot
 		where TCommand : IRequest<Unit>
 	{
-		protected CreateCommandHandler(IRepository<TAggregate> repo)
-			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Create)
+		protected CreateCommandHandler(IRepository<TAggregate> repo, IMediator mediator)
+			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Create, mediator)
 		{
 		}
 	}
@@ -21,8 +21,8 @@ namespace Codefondo.UseCase.Kernel
 		where TAggregate : AggregateRoot
 		where TCommand : IRequest<Unit>
 	{
-		protected UpdateCommandHandler(IRepository<TAggregate> repo)
-			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Update)
+		protected UpdateCommandHandler(IRepository<TAggregate> repo, IMediator mediator)
+			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Update, mediator)
 		{
 		}
 	}

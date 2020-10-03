@@ -18,7 +18,10 @@ namespace GroupBudget.Account.Domain
 		}
 
 		public static UserId FromGuid(Guid value) => new UserId(value);
+		public static UserId FromString(string ownerId) => new UserId(Guid.Parse(ownerId));
+
 
 		public static implicit operator Guid(UserId self) => self.Value;
+
 	}
 }
