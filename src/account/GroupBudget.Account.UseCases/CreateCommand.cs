@@ -37,8 +37,6 @@ namespace GroupBudget.Account.UseCases
 									Period.FromMonth(command.accountDto.Year, command.accountDto.Month),
 									CurrencyCode.FromString(command.accountDto.Currency));
 
-				accountRepo.Save(account);
-
 				return account;
 			}
 		}

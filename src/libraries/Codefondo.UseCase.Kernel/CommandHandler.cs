@@ -52,7 +52,7 @@ namespace Codefondo.UseCase.Kernel
 
 			if (CommandType == HandlerTypeEnum.Update)
 			{
-				AggregateRoot = (TAggregate)await Repo.Load();
+				AggregateRoot = (TAggregate)await Repo.Load(AggregateId.Value);
 			}
 
 			try

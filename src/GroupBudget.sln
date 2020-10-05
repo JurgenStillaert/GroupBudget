@@ -33,15 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.Account.UseCase
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.WebApi", "GroupBudget.WebApi\GroupBudget.WebApi.csproj", "{920E5085-3D1F-4F5B-88D3-AA6F9CE99498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupBudget.Account.Persistence", "account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj", "{0FC2D634-A2A1-4DA9-9F54-4057AADD903F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.Account.Persistence", "account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj", "{0FC2D634-A2A1-4DA9-9F54-4057AADD903F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{5A6C9DAA-86F7-4E5F-B4D6-853816811C62}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupBudget.Account.Dtos", "account\GroupBudget.Account.Dtos\GroupBudget.Account.Dtos.csproj", "{C96C7CEB-66DE-4CA5-BFED-7A2B710A998E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.Account.Dtos", "account\GroupBudget.Account.Dtos\GroupBudget.Account.Dtos.csproj", "{C96C7CEB-66DE-4CA5-BFED-7A2B710A998E}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F835B566-7D7B-4CA0-BB35-96343A99AE1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupBudget.Account.Infrastructure", "account\GroupBudget.Account.Infrastructure\GroupBudget.Account.Infrastructure.csproj", "{C902AF4C-C066-4C10-8A95-539A74ECBFDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupBudget.Account.Infrastructure", "account\GroupBudget.Account.Infrastructure\GroupBudget.Account.Infrastructure.csproj", "{C902AF4C-C066-4C10-8A95-539A74ECBFDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
