@@ -18,3 +18,19 @@ services:
     restart: always
     ports:
       - "30002:8081"
+  eventstore.db:
+    image: eventstore/eventstore
+    command: --enable-external-tcp --enable-atom-pub-over-http --run-projections=all --start-standard-projections=true
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_INT_TCP_PORT=1112
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_INT_HTTP_PORT=2112
+      - EVENTSTORE_EXT_HTTP_PORT=2113
+      - EVENTSTORE_INSECURE=true
+    restart: always
+    ports:
+      - "31112:1112"
+      - "31113:1113"
+      - "32112:2112"
+      - "32113:2113"

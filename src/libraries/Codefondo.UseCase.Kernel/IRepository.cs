@@ -1,4 +1,5 @@
 ﻿using Codefondo.DDD.Kernel;
+using System;
 using System.Threading.Tasks;
 
 namespace Codefondo.UseCase.Kernel
@@ -7,6 +8,6 @@ namespace Codefondo.UseCase.Kernel
 		 where TAggregate : AggregateRoot
 	{
 		Task Save(TAggregate aggregateRoot);
-		Task<AggregateRoot> Load();
+		Task<AggregateRoot> Load(Guid aggregateId);
 	}
 }
