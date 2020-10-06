@@ -2,6 +2,8 @@
 using GroupBudget.Account.Domain;
 using GroupBudget.Account.Dtos;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GroupBudget.Account.UseCases
 {
@@ -16,12 +18,9 @@ namespace GroupBudget.Account.UseCases
 
 		internal sealed class CreateCommandHandler : CreateCommandHandler<CreateCommand, AccountRoot>
 		{
-			private readonly IAccountRepository accountRepo;
-
-			public CreateCommandHandler(IAccountRepository accountRepo, IMediator mediator)
+			public CreateCommandHandler(IRepository<AccountRoot> accountRepo, IMediator mediator)
 				: base(accountRepo, mediator)
 			{
-				this.accountRepo = accountRepo;
 			}
 
 			private void PreHandle(CreateCommand command)
@@ -29,7 +28,7 @@ namespace GroupBudget.Account.UseCases
 				AggregateId = AccountId.FromGuid(command.accountDto.Id);
 			}
 
-			private AccountRoot Handle(CreateCommand command)
+			protected async override Task<AccountRoot> Apply(CreateCommand command, CancellationToken cancellationToken)
 			{
 				var account = AccountRoot.Create(
 									AccountId.FromGuid(command.accountDto.Id),

@@ -1,4 +1,5 @@
 ﻿using Codefondo.DDD.Kernel;
+using Newtonsoft.Json;
 using System;
 
 namespace GroupBudget.Account.Messages
@@ -9,10 +10,10 @@ namespace GroupBudget.Account.Messages
 		{
 			public sealed class AccountCreated : IDomainEvent
 			{
-				public AccountCreated(Guid id, Guid userId, DateTime startDate, DateTime endDate, string currencyCode)
+				public AccountCreated(Guid id, Guid ownerId, DateTime startDate, DateTime endDate, string currencyCode)
 				{
 					Id = id;
-					OwnerId = userId;
+					OwnerId = ownerId;
 					StartDate = startDate;
 					EndDate = endDate;
 					CurrencyCode = currencyCode;

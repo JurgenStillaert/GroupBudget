@@ -40,7 +40,7 @@ namespace GroupBudget.Account.Domain
 		/// </summary>
 		public CurrencyCode Currency { get; private set; }
 
-		private List<Booking> PrivateBookings { get; set; }
+		private List<Booking> PrivateBookings { get; set; } = new List<Booking>();
 
 		/// <summary>Create a new account</summary>
 		/// <param name="accountId">ID of the account</param>
@@ -49,10 +49,7 @@ namespace GroupBudget.Account.Domain
 		/// <param name="currency">The currency of the payments registered in the bookings</param>
 		public static AccountRoot Create(AccountId accountId, UserId userId, Period period, CurrencyCode currency)
 		{
-			var account = new AccountRoot
-			{
-				PrivateBookings = new List<Booking>()
-			};
+			var account = new AccountRoot();
 
 			account.Apply(new V1.AccountCreated(accountId, userId, period.StartDate, period.EndDate, currency.Value));
 
