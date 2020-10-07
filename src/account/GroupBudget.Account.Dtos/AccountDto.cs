@@ -9,11 +9,11 @@ namespace GroupBudget.Account.Dtos
 	public class AccountDto
 	{
 		public AccountDto(
-			Guid id, 
-			Guid ownerId, 
-			string periodName, 
-			string totalSpent, 
-			List<AccountItemDto> items, 
+			Guid id,
+			Guid ownerId,
+			string periodName,
+			string totalSpent,
+			List<AccountItemDto> items,
 			bool monthIsClosed,
 			DateTime startDate,
 			DateTime endDate)
@@ -30,32 +30,45 @@ namespace GroupBudget.Account.Dtos
 
 		[BsonId]
 		public string Id { get; set; }
+
 		[BsonElement("owner")]
 		public string OwnerId { get; set; }
+
 		[BsonElement("period")]
 		public string PeriodName { get; set; }
+
 		[BsonElement("spent")]
 		public string TotalSpent { get; set; }
+
 		public List<AccountItemDto> Items { get; set; }
+
 		[BsonElement("closed")]
 		public bool MonthIsClosed { get; set; }
+
 		[BsonElement("startdate")]
 		public DateTime StartDate { get; set; }
+
 		[BsonElement("enddate")]
 		public DateTime EndDate { get; set; }
 	}
 
 	public class AccountItemDto
 	{
-		public AccountItemDto(DateTime date, string amount, string description)
+		public AccountItemDto(Guid bookingId, DateTime date, string amount, string description)
 		{
 			Date = date;
 			Amount = amount;
 			Description = description;
+			BookingId = bookingId;
 		}
 
-		public DateTime Date { get; }
-		public string Amount { get; }
-		public string Description { get; }
+		public AccountItemDto()
+		{
+		}
+
+		public Guid BookingId { get; set; }
+		public DateTime Date { get; set; }
+		public string Amount { get; set; }
+		public string Description { get; set; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using GroupBudget.Account.Domain;
+﻿using Codefondo.UseCase.Kernel;
+using GroupBudget.Account.Domain;
 using GroupBudget.Account.Dtos;
 using MediatR;
 using Moq;
@@ -33,7 +34,7 @@ namespace GroupBudget.Account.UseCases.Tests
 
 			var command = new CreateCommand(accountDto);
 
-			var mockRepo = new Mock<IAccountRepository>();
+			var mockRepo = new Mock<IRepository<AccountRoot>>();
 			mockRepo.Setup(x => x.Save(It.IsAny<AccountRoot>())).Verifiable();
 
 			var mockMediater = new Mock<IMediator>();

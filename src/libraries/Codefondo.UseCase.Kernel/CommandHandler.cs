@@ -23,15 +23,15 @@ namespace Codefondo.UseCase.Kernel
 	{
 		protected UpdateCommandHandler(IRepository<TAggregate> repo, IMediator mediator)
 			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Update, mediator)
-		{
-		}
+		{ }
+
+		protected abstract void PreHandle(TCommand command);
 	}
 
 	public abstract class CommandHandler<TCommand, TAggregate> : IRequestHandler<TCommand>
 		where TAggregate : AggregateRoot
 		where TCommand : IRequest<Unit>
 	{
-
 		protected CommandHandler(IRepository<TAggregate> repo, HandlerTypeEnum handlerType, IMediator mediator)
 		{
 			Repo = repo;
@@ -45,34 +45,32 @@ namespace Codefondo.UseCase.Kernel
 		private HandlerTypeEnum CommandType { get; }
 		private readonly IMediator mediator;
 
-		public async Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(TCommand command, CancellationToken cancellationToken)
 		{
-			//Execute prehandle method to get aggregateId
-			var preHandleMethod = GetHandleMethod(request, HandleMethodType.PreHandle);
-
 			if (CommandType == HandlerTypeEnum.Update)
 			{
+				//Execute prehandle method to get aggregateId
+				var preHandleMethod = GetHandleMethod(command, HandleMethodType.PreHandle);
+
+				try
+				{
+					preHandleMethod.Invoke(this, new object[] { command });
+				}
+				catch (TargetInvocationException targetInvocationException)
+				{
+					throw targetInvocationException.InnerException;
+				}
+				catch (Exception)
+				{
+					throw;
+				}
+
 				AggregateRoot = (TAggregate)await Repo.Load(AggregateId.Value);
 			}
 
 			try
 			{
-				preHandleMethod.Invoke(this, new object[] { request });
-			}
-			catch (TargetInvocationException targetInvocationException)
-			{
-				throw targetInvocationException.InnerException;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-
-			var handleMethod = GetHandleMethod(request, HandleMethodType.Handle);
-
-			try
-			{
-				var aggregateRoot = (TAggregate)handleMethod.Invoke(this, new object[] { request });
+				var aggregateRoot = await Apply(command, cancellationToken);
 				await Repo.Save(aggregateRoot);
 
 				//Public events
@@ -90,10 +88,10 @@ namespace Codefondo.UseCase.Kernel
 				throw;
 			}
 
-			
-
 			return await Unit.Task;
 		}
+
+		protected abstract Task<TAggregate> Apply(TCommand command, CancellationToken cancellationToken);
 
 		private MethodInfo GetHandleMethod(TCommand command, HandleMethodType handleMethodType)
 		{

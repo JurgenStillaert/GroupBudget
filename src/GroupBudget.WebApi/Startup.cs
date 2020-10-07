@@ -1,4 +1,4 @@
-using GroupBudget.Account.Infrastructure;
+using GroupBudget.Account.WebApi;
 using GroupBudget.WebApi.Infrastructure;
 using Hangfire;
 using Hangfire.MemoryStorage;
@@ -43,6 +43,8 @@ namespace GroupBudget.WebApi
 			});
 
 			services.AddControllers();
+
+			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

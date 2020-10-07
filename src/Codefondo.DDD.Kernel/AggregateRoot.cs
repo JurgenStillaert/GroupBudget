@@ -50,6 +50,14 @@ namespace Codefondo.DDD.Kernel
 			_changes.Add(@event);
 		}
 
+		public void Replay(List<IDomainEvent> history)
+		{
+			foreach (var @event in history)
+			{
+				When(@event);
+			}
+		}
+
 		protected abstract void EnsureValidation();
 
 		private readonly List<IDomainEvent> _changes = new List<IDomainEvent>();
