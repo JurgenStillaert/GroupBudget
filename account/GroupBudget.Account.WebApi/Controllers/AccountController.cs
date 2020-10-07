@@ -19,6 +19,12 @@ namespace GroupBudget.Account.WebApi.Controllers
 			this.mediator = mediator;
 		}
 
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<AccountDto>>> GetAccounts([FromQuery] Guid userGuid)
+		{
+			return Ok(await mediator.Send(new GetAccountDtosByUserQuery(userGuid)));
+		}
+
 		[HttpPost]
 		public async Task<ActionResult<AccountDto>> Create([FromBody] CreateAccountDto accountDto)
 		{
@@ -29,22 +35,45 @@ namespace GroupBudget.Account.WebApi.Controllers
 			return Ok(accountDto);
 		}
 
-		[HttpGet]
-		[Route("/user/{userGuid}")]
-		public async Task<ActionResult<IEnumerable<AccountDto>>> GetAccountsByUser([FromRoute] Guid userGuid)
-		{
-			return Ok(await mediator.Send(new GetAccountDtosByUserQuery(userGuid)));
-		}
-
 		[HttpPost]
 		[Route("/{accountId}/booking/")]
-		public async Task<ActionResult<AccountItemDto>> PostNewBooking([FromRoute]Guid accountId, [FromBody] AccountItemDto booking)
+		public async Task<ActionResult<AccountItemDto>> PostNewBooking([FromRoute] Guid accountId, [FromBody] AccountItemDto booking)
 		{
 			booking.BookingId = Guid.NewGuid();
 
 			await mediator.Send(new BookPaymentCommand(accountId, booking));
 
 			return Ok(booking);
+		}
+
+		[HttpPut]
+		[Route("/{accountId}/booking/{bookingId}")]
+		public async Task<ActionResult<AccountItemDto>> PutBooking(
+			[FromRoute] Guid accountId,
+			[FromRoute] Guid bookingId,
+			[FromBody] AccountItemDto booking)
+		{
+			await mediator.Send(new ChangePaymentCommand(accountId, bookingId, booking));
+
+			return Ok(booking);
+		}
+
+		[HttpPut]
+		[Route("/{accountId}")]
+		public async Task<IActionResult> CloseBooking([FromRoute] Guid accountID)
+		{
+			await mediator.Send(new CloseAccountCommand(accountID));
+
+			return Ok();
+		}
+
+		[HttpDelete]
+		[Route("/{accountId}/booking/{bookingId}")]
+		public async Task<IActionResult> DeleteBooking([FromRoute] Guid accountId, [FromRoute] Guid bookingId)
+		{
+			await mediator.Send(new RemovePaymentCommand(accountId, bookingId));
+
+			return Ok();
 		}
 	}
 }

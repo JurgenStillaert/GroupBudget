@@ -195,7 +195,7 @@ namespace GroupBudget.Account.Domain.Tests
 			Assert.AreEqual(3, account.GetChanges().Count);
 			Assert.AreEqual(typeof(V1.BookingChanged), account.GetChanges()[2].GetType());
 			var @event = account.GetChanges()[2] as V1.BookingChanged;
-			Assert.AreEqual(accountIdGuid, @event.Id);
+			Assert.AreEqual(accountIdGuid, @event.AccountId);
 			Assert.AreEqual(bookingIdGuid, @event.BookingId);
 			Assert.AreEqual(200.00m, @event.Amount);
 			Assert.AreEqual("EUR", @event.CurrencyCode);
@@ -439,7 +439,7 @@ namespace GroupBudget.Account.Domain.Tests
 			var @event = account.GetChanges().Last() as V1.AccountClosed;
 			Assert.AreEqual(23.53m, @event.TotalPaidAmount);
 			Assert.AreEqual("EUR", @event.CurrencyCode);
-			Assert.AreEqual(idGuid, @event.Id);
+			Assert.AreEqual(idGuid, @event.AccountId);
 		}
 
 		[Test]
