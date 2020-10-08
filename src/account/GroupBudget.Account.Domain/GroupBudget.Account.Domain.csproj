@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
-    <ProjectReference Include="..\..\GroupBudget.SharedKernel\GroupBudget.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\shared\GroupBudget.SharedKernel\GroupBudget.SharedKernel.csproj" />
     <ProjectReference Include="..\GroupBudget.Account.Messages\GroupBudget.Account.Messages.csproj" />
   </ItemGroup>
 

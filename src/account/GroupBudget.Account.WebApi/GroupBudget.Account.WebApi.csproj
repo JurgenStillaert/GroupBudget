@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj" />
+    <ProjectReference Include="..\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
