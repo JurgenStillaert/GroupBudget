@@ -1,4 +1,4 @@
-﻿using GroupBudget.Account.Dtos;
+﻿using GroupBudget.Account.Messages.Dtos;
 using GroupBudget.Account.UseCases;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

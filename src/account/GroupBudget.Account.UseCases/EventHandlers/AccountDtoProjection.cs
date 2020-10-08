@@ -1,4 +1,4 @@
-﻿using GroupBudget.Account.Dtos;
+﻿using GroupBudget.Account.Messages.Dtos;
 using MediatR;
 using System;
 using System.Collections.Generic;
