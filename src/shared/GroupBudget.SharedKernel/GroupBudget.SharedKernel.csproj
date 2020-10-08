@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
+    <ProjectReference Include="..\..\libraries\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
   </ItemGroup>
 
 </Project>

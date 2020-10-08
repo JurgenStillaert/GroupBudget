@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
+    <ProjectReference Include="..\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
   </ItemGroup>
 
 </Project>

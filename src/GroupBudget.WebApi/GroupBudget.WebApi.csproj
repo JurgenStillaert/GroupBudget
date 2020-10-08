@@ -19,9 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\account\GroupBudget.Account.WebApi\GroupBudget.Account.WebApi.csproj" />
     <ProjectReference Include="..\account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj" />
     <ProjectReference Include="..\account\GroupBudget.Account.UseCases\GroupBudget.Account.UseCases.csproj" />
+    <ProjectReference Include="..\account\GroupBudget.Account.WebApi\GroupBudget.Account.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
