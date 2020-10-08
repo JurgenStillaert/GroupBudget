@@ -1,6 +1,6 @@
 ﻿using Codefondo.UseCase.Kernel;
 using GroupBudget.Account.Domain;
-using GroupBudget.Account.Dtos;
+using GroupBudget.Account.Messages.Dtos;
 using MediatR;
 using Moq;
 using NUnit.Framework;

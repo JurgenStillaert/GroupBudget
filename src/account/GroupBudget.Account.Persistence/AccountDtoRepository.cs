@@ -1,4 +1,4 @@
-﻿using GroupBudget.Account.Dtos;
+﻿using GroupBudget.Account.Messages.Dtos;
 using GroupBudget.Account.Persistence.MongoDb;
 using GroupBudget.Account.UseCases.EventHandlers;
 using MongoDB.Driver;
