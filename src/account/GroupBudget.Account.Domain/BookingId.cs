@@ -10,7 +10,7 @@ namespace GroupBudget.Account.Domain
 		protected BookingId(Guid value)
 		{
 			if (value == default)
-				throw new ArgumentNullException("Booking id must gave a value", nameof(value));
+				throw new ArgumentNullException("Booking id must have a value", nameof(value));
 
 			Value = value;
 		}

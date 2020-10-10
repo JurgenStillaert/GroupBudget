@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-namespace GroupBudget.Account.Domain
+namespace GroupBudget.SharedKernel
 {
 	public class Period : Value<Period>
 	{

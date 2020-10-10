@@ -1,4 +1,6 @@
-﻿using GroupBudget.Account.Messages.Dtos;
+﻿using GroupBudget.Account.Messages.Commands;
+using GroupBudget.Account.Messages.Dtos;
+using GroupBudget.Account.Messages.Queries;
 using GroupBudget.Account.UseCases;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +38,7 @@ namespace GroupBudget.Account.WebApi.Controllers
 		}
 
 		[HttpPost]
-		[Route("/{accountId}/booking/")]
+		[Route("{accountId}/booking/")]
 		public async Task<ActionResult<AccountItemDto>> PostNewBooking([FromRoute] Guid accountId, [FromBody] AccountItemDto booking)
 		{
 			booking.BookingId = Guid.NewGuid();
@@ -47,7 +49,7 @@ namespace GroupBudget.Account.WebApi.Controllers
 		}
 
 		[HttpPut]
-		[Route("/{accountId}/booking/{bookingId}")]
+		[Route("{accountId}/booking/{bookingId}")]
 		public async Task<ActionResult<AccountItemDto>> PutBooking(
 			[FromRoute] Guid accountId,
 			[FromRoute] Guid bookingId,
@@ -55,14 +57,15 @@ namespace GroupBudget.Account.WebApi.Controllers
 		{
 			await mediator.Send(new ChangePaymentCommand(accountId, bookingId, booking));
 
+			booking.BookingId = bookingId;
 			return Ok(booking);
 		}
 
 		[HttpPut]
-		[Route("/{accountId}")]
-		public async Task<IActionResult> CloseBooking([FromRoute] Guid accountID)
+		[Route("{accountId}")]
+		public async Task<IActionResult> CloseBooking([FromRoute] Guid accountId)
 		{
-			await mediator.Send(new CloseAccountCommand(accountID));
+			await mediator.Send(new CloseAccountCommand(accountId));
 
 			return Ok();
 		}

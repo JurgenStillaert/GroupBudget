@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.14" />
-    <PackageReference Include="Hangfire.Core" Version="1.7.14" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.15" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.15" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
@@ -22,6 +22,7 @@
     <ProjectReference Include="..\account\GroupBudget.Account.Persistence\GroupBudget.Account.Persistence.csproj" />
     <ProjectReference Include="..\account\GroupBudget.Account.UseCases\GroupBudget.Account.UseCases.csproj" />
     <ProjectReference Include="..\account\GroupBudget.Account.WebApi\GroupBudget.Account.WebApi.csproj" />
+    <ProjectReference Include="..\clearance\GroupBudget.Clearance.Business\GroupBudget.Clearance.Business.csproj" />
   </ItemGroup>
 
 </Project>

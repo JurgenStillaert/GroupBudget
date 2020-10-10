@@ -31,11 +31,6 @@ namespace GroupBudget.Account.Domain
 		public IReadOnlyList<Booking> Bookings => PrivateBookings;
 
 		/// <summary>
-		/// The total amount paid (sum of the payments in bookings)
-		/// </summary>
-		public Money TotalAmountPaid => Money.FromDecimal(PrivateBookings.Sum(x => x.Payment.Amount), Currency.Value);
-
-		/// <summary>
 		/// In which currency is this account registered
 		/// </summary>
 		public CurrencyCode Currency { get; private set; }
@@ -71,10 +66,13 @@ namespace GroupBudget.Account.Domain
 		/// <summary>
 		/// Remove an existing payment
 		/// </summary>
-		/// <param name="id">The bookign id from the booking to remove</param>
+		/// <param name="id">The booking id from the booking to remove</param>
 		public void DeleteBooking(BookingId id)
 		{
-			Apply(new V1.BookingRemovedFromAccount(Id, id.Value));
+			var bookingItem = Bookings.Single(x => x.Id == id);
+
+			//This is getting data from the aggregate to use it in the event
+			Apply(new V1.BookingRemovedFromAccount(Id, id.Value, bookingItem.Payment.Amount, bookingItem.Payment.CurrencyCode));
 		}
 
 		public void ChangeBooking(BookingId id, Payment amount, BookingDate date, Description description)
@@ -87,7 +85,7 @@ namespace GroupBudget.Account.Domain
 		/// </summary>
 		public void Close()
 		{
-			Apply(new V1.AccountClosed(Id, TotalAmountPaid.Amount, Currency.Value));
+			Apply(new V1.AccountClosed(Id));
 		}
 
 		protected override void EnsureValidation()
@@ -123,7 +121,7 @@ namespace GroupBudget.Account.Domain
 #pragma warning disable IDE0060 // Remove unused parameter
 		private void Handle(V1.AccountCreated @event)
 		{
-			Id = @event.Id;
+			Id = @event.AccountId;
 			OwnerId = UserId.FromGuid(@event.OwnerId);
 			Period = Period.FromStartAndEndDate(@event.StartDate, @event.EndDate);
 			State = AccountState.CreateOpen();

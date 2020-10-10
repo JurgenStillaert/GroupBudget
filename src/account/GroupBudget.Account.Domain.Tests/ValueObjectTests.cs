@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using GroupBudget.SharedKernel;
+using NUnit.Framework;
 using System;
 
 namespace GroupBudget.Account.Domain.Tests

@@ -3,7 +3,6 @@ using EventStore.ClientAPI;
 using GroupBudget.Account.Domain;
 using GroupBudget.Account.Persistence;
 using GroupBudget.Account.Persistence.MongoDb;
-using GroupBudget.Account.UseCases;
 using GroupBudget.Account.UseCases.EventHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +19,7 @@ namespace GroupBudget.Account.WebApi
 			services.AddSingleton<IAccountDatabaseSettings>(sp => sp.GetRequiredService<IOptions<AccountDatabaseSettings>>().Value);
 
 			var esConnection = EventStoreConnection.Create(
-									ConnectionSettings.Create().KeepReconnecting().DisableServerCertificateValidation().DisableTls(), 
+									ConnectionSettings.Create().KeepReconnecting().DisableServerCertificateValidation().DisableTls(),
 									new System.Uri(configuration["AccountEventStoreSettings:ConnectionString"]));
 			esConnection.ConnectAsync().Wait();
 

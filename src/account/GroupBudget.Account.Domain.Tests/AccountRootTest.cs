@@ -36,7 +36,7 @@ namespace GroupBudget.Account.Domain.Tests
 			Assert.AreEqual(1, account.GetChanges().Count);
 			Assert.AreEqual(typeof(V1.AccountCreated), account.GetChanges()[0].GetType());
 			var @event = account.GetChanges()[0] as V1.AccountCreated;
-			Assert.AreEqual(idGuid, @event.Id);
+			Assert.AreEqual(idGuid, @event.AccountId);
 			Assert.AreEqual(ownerGuid, @event.OwnerId);
 			Assert.AreEqual(DateTime.Parse("2020-09-01"), @event.StartDate);
 			Assert.AreEqual(DateTime.Parse("2020-09-30"), @event.EndDate);
@@ -434,11 +434,8 @@ namespace GroupBudget.Account.Domain.Tests
 
 			//Assert
 			Assert.AreEqual(AccountState.AccountStateEnum.Closed, account.State.Value);
-			Assert.AreEqual(23.53m, account.TotalAmountPaid.Amount);
 			Assert.IsTrue(account.GetChanges().Last() is V1.AccountClosed);
 			var @event = account.GetChanges().Last() as V1.AccountClosed;
-			Assert.AreEqual(23.53m, @event.TotalPaidAmount);
-			Assert.AreEqual("EUR", @event.CurrencyCode);
 			Assert.AreEqual(idGuid, @event.AccountId);
 		}
 

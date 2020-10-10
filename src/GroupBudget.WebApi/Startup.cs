@@ -1,4 +1,5 @@
 using GroupBudget.Account.WebApi;
+using GroupBudget.Clearance.Business.WebApi;
 using GroupBudget.WebApi.Infrastructure;
 using Hangfire;
 using Hangfire.MemoryStorage;
@@ -36,6 +37,7 @@ namespace GroupBudget.WebApi
 			services.AddHangfireServer();
 
 			services.AddAccount(configuration);
+			services.AddClearance(configuration);
 
 			services.AddSwaggerGen(c =>
 			{

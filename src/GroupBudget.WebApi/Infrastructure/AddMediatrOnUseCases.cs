@@ -14,12 +14,14 @@ namespace GroupBudget.WebApi.Infrastructure
 			var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
 			var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
 
-			var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.UseCases.dll");
+			var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.UseCases.dll").ToList();
+			referencedPaths.AddRange(Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.Business.dll").ToList());
+
 			var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
 
 			toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
 
-			var useCaseAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.EndsWith(".UseCases")).ToArray();
+			var useCaseAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.EndsWith(".UseCases") || x.GetName().Name.EndsWith(".Business")).ToArray();
 
 			services.AddMediatR(useCaseAssemblies);
 
