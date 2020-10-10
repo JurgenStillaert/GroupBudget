@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Bson" Version="2.11.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libraries\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
+    <ProjectReference Include="..\..\shared\GroupBudget.SharedKernel\GroupBudget.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

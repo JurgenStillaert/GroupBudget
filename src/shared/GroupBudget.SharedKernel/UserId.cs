@@ -1,7 +1,7 @@
 ﻿using Codefondo.DDD.Kernel;
 using System;
 
-namespace GroupBudget.Account.Domain
+namespace GroupBudget.SharedKernel
 {
 	public class UserId : Value<UserId>
 	{

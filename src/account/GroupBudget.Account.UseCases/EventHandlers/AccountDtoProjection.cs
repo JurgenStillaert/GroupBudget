@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static GroupBudget.Account.Messages.Events.V1;
+using static GroupBudget.Account.Messages.Events;
 
 namespace GroupBudget.Account.UseCases.EventHandlers
 {
 	public static class AccountDtoProjections
 	{
-		public class AccountCreatedNotification : INotificationHandler<AccountCreated>
+		public class AccountCreatedNotification : INotificationHandler<V1.AccountCreated>
 		{
 			private readonly IAccountDtoRepository accountDtoRepository;
 
@@ -20,15 +20,15 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 				this.accountDtoRepository = accountDtoRepository;
 			}
 
-			public async Task Handle(AccountCreated @event, CancellationToken cancellationToken)
+			public async Task Handle(V1.AccountCreated @event, CancellationToken cancellationToken)
 			{
 				var periodeName = $"{@event.StartDate.ToString("MMMM")} {@event.StartDate.Year}";
 
 				var accountDto = new AccountDto(
-										@event.Id,
+										@event.AccountId,
 										@event.OwnerId,
 										periodeName,
-										$"0 {@event.CurrencyCode}",
+										@event.CurrencyCode,
 										new List<AccountItemDto>(),
 										false,
 										@event.StartDate,
@@ -38,7 +38,7 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 			}
 		}
 
-		public class BookingAddedToAccountNotification : INotificationHandler<BookingAddedToAccount>
+		public class BookingAddedToAccountNotification : INotificationHandler<V1.BookingAddedToAccount>
 		{
 			private readonly IAccountDtoRepository accountDtoRepository;
 
@@ -47,7 +47,7 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 				this.accountDtoRepository = accountDtoRepository;
 			}
 
-			public async Task Handle(BookingAddedToAccount @event, CancellationToken cancellationToken)
+			public async Task Handle(V1.BookingAddedToAccount @event, CancellationToken cancellationToken)
 			{
 				var accountDto = await accountDtoRepository.GetAccountByAccountId(@event.AccountId);
 
@@ -61,13 +61,15 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 					accountDto.Items = new List<AccountItemDto>();
 				}
 
-				accountDto.Items.Add(new AccountItemDto(@event.BookingId, @event.Date, $"{@event.Amount} {@event.CurrencyCode}", @event.Description));
+				accountDto.Items.Add(new AccountItemDto(@event.BookingId, @event.Date, @event.Amount, @event.Description));
+
+				accountDto.TotalSpent = accountDto.Items.Sum(x => x.Amount);
 
 				await accountDtoRepository.Update(accountDto);
 			}
 		}
 
-		public class BookingChangedNotification : INotificationHandler<BookingChanged>
+		public class BookingChangedNotification : INotificationHandler<V1.BookingChanged>
 		{
 			private readonly IAccountDtoRepository accountDtoRepository;
 
@@ -76,7 +78,7 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 				this.accountDtoRepository = accountDtoRepository;
 			}
 
-			public async Task Handle(BookingChanged @event, CancellationToken cancellationToken)
+			public async Task Handle(V1.BookingChanged @event, CancellationToken cancellationToken)
 			{
 				var accountDto = await accountDtoRepository.GetAccountByAccountId(@event.AccountId);
 
@@ -92,15 +94,17 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 
 				var bookingItem = accountDto.Items.Single(x => x.BookingId == @event.BookingId);
 
-				bookingItem.Amount = $"{@event.Amount} {@event.CurrencyCode}";
+				bookingItem.Amount = @event.Amount;
 				bookingItem.Date = @event.Date;
 				bookingItem.Description = @event.Description;
+
+				accountDto.TotalSpent = accountDto.Items.Sum(x => x.Amount);
 
 				await accountDtoRepository.Update(accountDto);
 			}
 		}
 
-		public class BookingRemovedFromAccountNotification : INotificationHandler<BookingRemovedFromAccount>
+		public class BookingRemovedFromAccountNotification : INotificationHandler<V1.BookingRemovedFromAccount>
 		{
 			private readonly IAccountDtoRepository accountDtoRepository;
 
@@ -109,7 +113,7 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 				this.accountDtoRepository = accountDtoRepository;
 			}
 
-			public async Task Handle(BookingRemovedFromAccount @event, CancellationToken cancellationToken)
+			public async Task Handle(V1.BookingRemovedFromAccount @event, CancellationToken cancellationToken)
 			{
 				var accountDto = await accountDtoRepository.GetAccountByAccountId(@event.AccountId);
 
@@ -127,11 +131,13 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 
 				accountDto.Items.Remove(bookingItem);
 
+				accountDto.TotalSpent = accountDto.Items.Sum(x => x.Amount);
+
 				await accountDtoRepository.Update(accountDto);
 			}
 		}
 
-		public class AccountClosedNotification : INotificationHandler<AccountClosed>
+		public class AccountClosedNotification : INotificationHandler<V1.AccountClosed>
 		{
 			private readonly IAccountDtoRepository accountDtoRepository;
 
@@ -140,7 +146,7 @@ namespace GroupBudget.Account.UseCases.EventHandlers
 				this.accountDtoRepository = accountDtoRepository;
 			}
 
-			public async Task Handle(AccountClosed @event, CancellationToken cancellationToken)
+			public async Task Handle(V1.AccountClosed @event, CancellationToken cancellationToken)
 			{
 				var accountDto = await accountDtoRepository.GetAccountByAccountId(@event.AccountId);
 

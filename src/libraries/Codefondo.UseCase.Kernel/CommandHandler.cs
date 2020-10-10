@@ -9,7 +9,7 @@ namespace Codefondo.UseCase.Kernel
 {
 	public abstract class CreateCommandHandler<TCommand, TAggregate> : CommandHandler<TCommand, TAggregate>
 		where TAggregate : AggregateRoot
-		where TCommand : IRequest<Unit>
+		where TCommand : IRequest
 	{
 		protected CreateCommandHandler(IRepository<TAggregate> repo, IMediator mediator)
 			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Create, mediator)
@@ -19,7 +19,7 @@ namespace Codefondo.UseCase.Kernel
 
 	public abstract class UpdateCommandHandler<TCommand, TAggregate> : CommandHandler<TCommand, TAggregate>
 		where TAggregate : AggregateRoot
-		where TCommand : IRequest<Unit>
+		where TCommand : IRequest
 	{
 		protected UpdateCommandHandler(IRepository<TAggregate> repo, IMediator mediator)
 			: base(repo, CommandHandler<TCommand, TAggregate>.HandlerTypeEnum.Update, mediator)
@@ -30,7 +30,7 @@ namespace Codefondo.UseCase.Kernel
 
 	public abstract class CommandHandler<TCommand, TAggregate> : IRequestHandler<TCommand>
 		where TAggregate : AggregateRoot
-		where TCommand : IRequest<Unit>
+		where TCommand : IRequest
 	{
 		protected CommandHandler(IRepository<TAggregate> repo, HandlerTypeEnum handlerType, IMediator mediator)
 		{
@@ -43,7 +43,7 @@ namespace Codefondo.UseCase.Kernel
 		public AggregateId<TAggregate> AggregateId { get; protected set; }
 		public TAggregate AggregateRoot { get; protected set; }
 		private HandlerTypeEnum CommandType { get; }
-		private readonly IMediator mediator;
+		protected readonly IMediator mediator;
 
 		public async Task<Unit> Handle(TCommand command, CancellationToken cancellationToken)
 		{
@@ -65,18 +65,22 @@ namespace Codefondo.UseCase.Kernel
 					throw;
 				}
 
-				AggregateRoot = (TAggregate)await Repo.Load(AggregateId.Value);
+				AggregateRoot = await GetAggregateFromRepo();
 			}
 
 			try
 			{
 				var aggregateRoot = await Apply(command, cancellationToken);
-				await Repo.Save(aggregateRoot);
 
-				//Public events
-				foreach (var @event in aggregateRoot.GetChanges())
+				if (aggregateRoot != null)
 				{
-					await mediator.Publish(@event, cancellationToken);
+					await Repo.Save(aggregateRoot);
+
+					//Public events
+					foreach (var @event in aggregateRoot.GetChanges())
+					{
+						await mediator.Publish(@event, cancellationToken);
+					}
 				}
 			}
 			catch (TargetInvocationException targetInvocationException)
@@ -89,6 +93,11 @@ namespace Codefondo.UseCase.Kernel
 			}
 
 			return await Unit.Task;
+		}
+
+		protected async Task<TAggregate> GetAggregateFromRepo()
+		{
+			return (TAggregate)await Repo.Load(AggregateId.Value);
 		}
 
 		protected abstract Task<TAggregate> Apply(TCommand command, CancellationToken cancellationToken);

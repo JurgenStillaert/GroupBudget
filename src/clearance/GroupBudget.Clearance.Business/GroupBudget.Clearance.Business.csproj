@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.Core" Version="1.7.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.8" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\account\GroupBudget.Account.Messages\GroupBudget.Account.Messages.csproj" />
+    <ProjectReference Include="..\..\libraries\Codefondo.DDD.Kernel\Codefondo.DDD.Kernel.csproj" />
+    <ProjectReference Include="..\..\libraries\Codefondo.UseCase.Kernel\Codefondo.UseCase.Kernel.csproj" />
+    <ProjectReference Include="..\..\shared\GroupBudget.SharedKernel\GroupBudget.SharedKernel.csproj" />
+    <ProjectReference Include="..\GroupBudget.Clearance.Messages\GroupBudget.Clearance.Messages.csproj" />
+  </ItemGroup>
+
+</Project>

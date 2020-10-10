@@ -1,5 +1,6 @@
 ﻿using Codefondo.UseCase.Kernel;
 using GroupBudget.Account.Domain;
+using GroupBudget.Account.Messages.Commands;
 using GroupBudget.Account.Messages.Dtos;
 using MediatR;
 using Moq;
@@ -7,7 +8,6 @@ using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using static GroupBudget.Account.UseCases.CreateCommand;
 
 namespace GroupBudget.Account.UseCases.Tests
 {

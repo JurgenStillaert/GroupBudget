@@ -9,16 +9,16 @@ namespace GroupBudget.Account.Messages
 		{
 			public sealed class AccountCreated : IDomainEvent
 			{
-				public AccountCreated(Guid id, Guid ownerId, DateTime startDate, DateTime endDate, string currencyCode)
+				public AccountCreated(Guid accountId, Guid ownerId, DateTime startDate, DateTime endDate, string currencyCode)
 				{
-					Id = id;
+					AccountId = accountId;
 					OwnerId = ownerId;
 					StartDate = startDate;
 					EndDate = endDate;
 					CurrencyCode = currencyCode;
 				}
 
-				public Guid Id { get; }
+				public Guid AccountId { get; }
 				public Guid OwnerId { get; }
 				public DateTime StartDate { get; }
 				public DateTime EndDate { get; }
@@ -53,28 +53,28 @@ namespace GroupBudget.Account.Messages
 
 			public class AccountClosed : IDomainEvent
 			{
-				public AccountClosed(Guid accountId, decimal totalPaidAmount, string currencyCode)
+				public AccountClosed(Guid accountId)
 				{
 					AccountId = accountId;
-					TotalPaidAmount = totalPaidAmount;
-					CurrencyCode = currencyCode;
 				}
 
 				public Guid AccountId { get; }
-				public decimal TotalPaidAmount { get; }
-				public string CurrencyCode { get; }
 			}
 
 			public class BookingRemovedFromAccount : IDomainEvent
 			{
-				public BookingRemovedFromAccount(Guid accountId, Guid bookingId)
+				public BookingRemovedFromAccount(Guid accountId, Guid bookingId, decimal amount, string currencyCode)
 				{
 					AccountId = accountId;
 					BookingId = bookingId;
+					Amount = amount;
+					CurrencyCode = currencyCode;
 				}
 
 				public Guid AccountId { get; }
 				public Guid BookingId { get; }
+				public decimal Amount { get; }
+				public string CurrencyCode { get; }
 			}
 
 			public class BookingChanged : IDomainEvent

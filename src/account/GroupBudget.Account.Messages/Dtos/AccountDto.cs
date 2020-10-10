@@ -12,7 +12,7 @@ namespace GroupBudget.Account.Messages.Dtos
 			Guid id,
 			Guid ownerId,
 			string periodName,
-			string totalSpent,
+			string currencyCode,
 			List<AccountItemDto> items,
 			bool monthIsClosed,
 			DateTime startDate,
@@ -21,7 +21,7 @@ namespace GroupBudget.Account.Messages.Dtos
 			Id = id.ToString();
 			OwnerId = ownerId.ToString();
 			PeriodName = periodName;
-			TotalSpent = totalSpent;
+			CurrencyCode = currencyCode;
 			Items = items;
 			MonthIsClosed = monthIsClosed;
 			StartDate = startDate;
@@ -37,9 +37,13 @@ namespace GroupBudget.Account.Messages.Dtos
 		[BsonElement("period")]
 		public string PeriodName { get; set; }
 
-		[BsonElement("spent")]
-		public string TotalSpent { get; set; }
+		[BsonElement("currency")]
+		public string CurrencyCode { get; set; }
 
+		[BsonElement("spent")]
+		public decimal TotalSpent { get; set; }
+
+		[BsonElement("items")]
 		public List<AccountItemDto> Items { get; set; }
 
 		[BsonElement("closed")]
@@ -54,7 +58,7 @@ namespace GroupBudget.Account.Messages.Dtos
 
 	public class AccountItemDto
 	{
-		public AccountItemDto(Guid bookingId, DateTime date, string amount, string description)
+		public AccountItemDto(Guid bookingId, DateTime date, decimal amount, string description)
 		{
 			Date = date;
 			Amount = amount;
@@ -62,13 +66,19 @@ namespace GroupBudget.Account.Messages.Dtos
 			BookingId = bookingId;
 		}
 
+		//Constructor to fullfill serializer
 		public AccountItemDto()
 		{
+
 		}
 
+		[BsonElement("bookingId")]
 		public Guid BookingId { get; set; }
+		[BsonElement("date")]
 		public DateTime Date { get; set; }
-		public string Amount { get; set; }
+		[BsonElement("amount")]
+		public decimal Amount { get; set; }
+		[BsonElement("description")]
 		public string Description { get; set; }
 	}
 }
