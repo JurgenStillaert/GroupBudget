@@ -9,6 +9,9 @@ services:
     ports:
       - "30000:80"
       - "30001:443"
+    volumes:
+      - "E:/Temp/GroupBudget/Logs:/app/logs"
+
   mongo:
     image: mongo
     restart: always
@@ -34,3 +37,9 @@ services:
       - "31113:1113"
       - "32112:2112"
       - "32113:2113"
+  seq:
+    image: datalust/seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "30003:80"
