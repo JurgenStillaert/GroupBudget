@@ -1,14 +1,18 @@
 using GroupBudget.Account.WebApi;
 using GroupBudget.Clearance.Business.WebApi;
+using GroupBudget.WebApi.Filters;
 using GroupBudget.WebApi.Infrastructure;
+using GroupBudget.WebApi.Middleware;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace GroupBudget.WebApi
 {
@@ -44,19 +48,17 @@ namespace GroupBudget.WebApi
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "GroupBudget API", Version = "v1" });
 			});
 
-			services.AddControllers();
-
-			
+			services.AddControllers(options =>
+			{
+				options.Filters.Add(typeof(TrackActionPerformanceFilter));
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
 
+			app.UseApiExceptionHandler(options => options.AddResponseDetails = UodateApiErrorResponse);
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
@@ -74,6 +76,11 @@ namespace GroupBudget.WebApi
 				endpoints.MapControllers();
 				endpoints.MapHangfireDashboard("/admin/hangfire", new DashboardOptions { Authorization = new[] { new HangFireAuthorizationFilter() } });
 			});
+		}
+
+		private static void UodateApiErrorResponse(HttpContext context, Exception ex, ApiError error)
+		{
+			//do something
 		}
 	}
 }
